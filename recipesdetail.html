@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipeDetails</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!--font awesome link-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!--link for fontfamily-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Leckerli+One&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <style>
+        .navbar-brand{
+            font-size: 35px;
+            font-family: "Leckerli One", cursive;
+            color: black !important;
+            text-decoration: none;
+            font-weight: 400;
+        }
+        
+        .collapse{
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .nav-link{
+          font-size: 14px;
+        }
+        .btn{
+         background-color: rgb(130, 110, 110) !important;
+         border-radius: 50px;
+         padding: 7px 30px;
+         color: white;
+         font-size: 14px !important;
+         font-weight: 500;
+         margin-left: 10px !important;
+        }
+        .right{
+         margin-left: 500px !important;
+        
+        }
+        p{
+          display: inline;
+        }
+    </style>
+</head>
+<body>
+    
+    <!--navbar start-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+          <a class="navbar-brand" href="#">kocina</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse ms-5" id="navbarNav">
+            <ul class="navbar-nav ">
+              <li class="nav-item p-1 me-4">
+                <a class="nav-link  " aria-current="page" href="home.html" >Home</a>
+              </li>
+              <li class="nav-item p-1 me-4">
+                <a class="nav-link" href="recipes.html">Recipes</a>
+              </li>
+              <li class="nav-item p-1 me-4">
+                <a class="nav-link" href="search.html">Search</a>
+              </li> 
+            </ul>
+            <div class="right">
+              
+              <a href="login.html" class="text-decoration-none text-dark me-3">Login</a>
+              <a href="signup.html" class="btn" >Sign Up</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!--navbar end-->
+
+      <div class="container">
+        <div class="row" id="recipeData">
+          
+        </div>
+      </div>
+      
+      <script>
+        let id=location.href.split("=")[1];
+        console.log(id);
+
+        async function FetchRecipeData(){
+          let url=`https://dummyjson.com/recipes/${id}`
+          let data= await(await (fetch(url))).json()
+          console.log(data);
+
+          let recipeData=`
+          
+          <div class="col-lg-6 col-12 mt-4">
+            <img src="${data["image"]}" alt="" width="80%">
+          </div>
+          <div class="col-lg-6 col-12 mt-4  text-dark" style="font-family: cursive">
+            <div>
+              <h1>${data["name"]}</h1>
+              <h5 class="mt-4">Category  :  ${data["cuisine"]} </h5>
+              <h5 class="mt-4">Rating : ${data["rating"]} </h5>
+              <h5 class="mt-4">Difficulty : ${data["difficulty"]} </h5>
+              <h5 class="mt-4">Calories per services : ${data["caloriesPerServing"]} </h5>
+              <h5 class="mt-4">Prep Time Minutes : ${data["prepTimeMinutes"]}</h5>
+              <h5 class="mt-4">Cook Time Minutes< : ${ data["cookTimeMinutes"]}/h5>
+              <h5 class="mt-4">Servings : ${data["servings"]}</h5>
+            </div>
+          </div>
+          `;
+          document.getElementById("recipeData").innerHTML += recipeData;
+        }
+        FetchRecipeData()
+      </script>
+</body>
+</html>
